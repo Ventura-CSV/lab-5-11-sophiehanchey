@@ -37,3 +37,15 @@ def test_main():
     assert tlist == retlist
 # assert v1 == -10, "Min value does not match"
 # assert v2 == 5, "Max value does not match"
+
+
+def test_sort():
+    with open('main.py') as f:
+        flag = True
+        for line in f:
+            if 'main()' in line:
+                break
+            if 'sort' in line:
+                flag = False
+                break
+    assert flag == True
