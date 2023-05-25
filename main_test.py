@@ -1,3 +1,4 @@
+import re
 import random
 import main
 
@@ -39,13 +40,42 @@ def test_main():
 # assert v2 == 5, "Max value does not match"
 
 
+def check_file_for_sort_function(file_path):
+    try:
+        with open(file_path, 'r') as file:
+            content = file.read()
+            # Regular expression pattern to match 'sort('
+            pattern = r'\bsort\s*\('
+            matches = re.findall(pattern, content)
+            for match in matches:
+                if not is_within_comment(content, match):
+                    return True
+            return False
+    except FileNotFoundError:
+        print(f"File '{file_path}' not found.")
+        return False
+
+
+def is_within_comment(content, match):
+    lines = content.split("\n")
+    for line in lines:
+        comment_start = line.find("#")
+        if comment_start != -1 and comment_start < line.find(match):
+            return True
+    return False
+
+
 def test_sort():
-    with open('main.py') as f:
-        flag = True
-        for line in f:
-            if 'main()' in line:
-                break
-            if 'sort' in line:
-                flag = False
-                break
-    assert flag == True
+    flag = check_file_for_sort_function('main.py')
+    assert flag == False, 'Do not use sort functions '
+
+# def test_sort():
+#     with open('main.py') as f:
+#         flag = True
+#         for line in f:
+#             if 'main()' in line:
+#                 break
+#             if 'sort' in line:
+#                 flag = False
+#                 break
+#     assert flag == True
