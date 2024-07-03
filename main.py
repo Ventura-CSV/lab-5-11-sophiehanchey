@@ -3,6 +3,7 @@ import random
 
 def merge(number1, number2):
     mlist = []
+    #compare items between lists
     while number1 and number2:
         if number1[0] < number2[0]:
             mlist.append(number1[0])
@@ -11,12 +12,10 @@ def merge(number1, number2):
             mlist.append(number2[0])
             del number2[0]
     else:
+        #add the rest of the remaining list to end
         mlist.extend(number1)
         mlist.extend(number2)
 
-    #################
-    # Do not delete return statement
-    # You should return 'mlst" as a merged result
     return mlist
 
 
